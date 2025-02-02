@@ -7,7 +7,7 @@ import Filter from './Filter';
 
 class App extends Component {
   state = {
-    contacts: [
+    contacts: JSON.parse(localStorage.getItem('contacts')) || [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
@@ -19,7 +19,10 @@ class App extends Component {
   componentDidMount() {
     const savedContacts = localStorage.getItem('contacts');
 
-    console.log('DidMount - Contacts from local storage: ', savedContacts);
+    console.log(
+      'DidMount - App - Contacts from local storage: ',
+      savedContacts
+    );
 
     if (savedContacts) {
       this.setState({ contacts: JSON.parse(savedContacts) });  // to OBJ
@@ -29,6 +32,10 @@ class App extends Component {
   componentDidUpdate(prevState) {
     if (this.state.contacts !== prevState.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));  // to string JSON
+      console.log(
+        'DidUpdate - App - Contacts saved to local storage',
+        this.state.contacts
+      );
     }
   }
 
